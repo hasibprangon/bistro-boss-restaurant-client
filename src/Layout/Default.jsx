@@ -5,7 +5,7 @@ import Header from '../Shared/Header/Header';
 
 const Default = () => {
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div className='max-w-7xl mx-auto font-prata'>
             <Header></Header>
             <Outlet></Outlet>
             <Footer></Footer>

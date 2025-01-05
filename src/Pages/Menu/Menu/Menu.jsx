@@ -10,21 +10,8 @@ const Menu = () => {
             <Helmet>
                 <title>Menu || Bistro Boss Restaurant</title>
             </Helmet>
-            <Cover
-            img={img}
-            title={'Our Menu'}
-            ></Cover>
-           <PopularMenu></PopularMenu>
-            <Cover
-            img={img}
-            title={'Our Menu'}
-            ></Cover>
-           <PopularMenu></PopularMenu>
-            <Cover
-            img={img}
-            title={'Our Menu'}
-            ></Cover>
-           <PopularMenu></PopularMenu>
+            <Cover img={img} title={'Our Menu'} ></Cover>
+           
         </div>
     );
 };

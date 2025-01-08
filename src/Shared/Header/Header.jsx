@@ -5,7 +5,7 @@ const Header = () => {
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/menu'>Our Menu</NavLink></li>
-        <li><a>Item 3</a></li>
+        <li><NavLink to='/order'>Order</NavLink></li>
     </>
     return (
         <div>

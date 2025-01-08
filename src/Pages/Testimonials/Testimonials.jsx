@@ -7,16 +7,16 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
+import axios from 'axios';
 
 
 const Testimonials = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        fetch('reviews.json')
-            .then(res => res.json())
-            .then(data => {
-                setReviews(data);
+        axios(`http://localhost:5000/reviews`)
+            .then(res => {
+                setReviews(res.data);
             })
     }, []);
 

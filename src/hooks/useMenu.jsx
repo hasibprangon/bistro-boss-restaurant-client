@@ -1,13 +1,13 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const useMenu = () => {
     const [menu, setMenu] = useState([]);
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        fetch('menu.json')
-            .then(res => res.json())
-            .then(data => {
-                setMenu(data);
+        axios(`http://localhost:5000/menu`)
+            .then(res => {
+                setMenu(res.data);
                 setLoading(false)
             })
     }, [])

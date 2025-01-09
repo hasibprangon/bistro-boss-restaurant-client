@@ -1,14 +1,18 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
 import Header from '../Shared/Header/Header';
 
 const Default = () => {
+    const location = useLocation();
+    console.log(location);
+    const isLogin = location.pathname.includes(`login`);
+
     return (
         <div className='max-w-7xl mx-auto font-prata'>
-            <Header></Header>
+            {isLogin || <Header></Header>}
             <Outlet></Outlet>
-            <Footer></Footer>
+            {isLogin || <Footer></Footer>}
         </div>
     );
 };

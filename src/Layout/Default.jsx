@@ -5,14 +5,13 @@ import Header from '../Shared/Header/Header';
 
 const Default = () => {
     const location = useLocation();
-    console.log(location);
-    const isLogin = location.pathname.includes(`login`);
+    const noHeaderFooter = location.pathname.includes(`login`) || location.pathname.includes(`signup`);
 
     return (
         <div className='max-w-7xl mx-auto font-prata'>
-            {isLogin || <Header></Header>}
+            {noHeaderFooter || <Header></Header>}
             <Outlet></Outlet>
-            {isLogin || <Footer></Footer>}
+            {noHeaderFooter || <Footer></Footer>}
         </div>
     );
 };

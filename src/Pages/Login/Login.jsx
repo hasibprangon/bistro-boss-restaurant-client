@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../Providers/AuthContextProvider';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const { singIn, setUser } = useContext(AuthContext)
 
 
     useEffect(() => {
@@ -17,7 +21,28 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+
+        singIn(email, password)
+            .then(result => {
+                const user = result?.user;
+                setUser(user)
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Login Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: "top",
+                    icon: "error",
+                    title: `${err.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+            })
 
     };
 
@@ -73,6 +98,8 @@ const Login = () => {
                             <button disabled={disabled} className="btn btn-primary">Login</button>
                         </div>
                     </form>
+
+                    <p className='text-center font-semibold my-2'>New to this website? Please <span className='text-blue-600'><Link to='/signup'>Sign Up</Link></span></p>
                 </div>
             </div>
         </div>

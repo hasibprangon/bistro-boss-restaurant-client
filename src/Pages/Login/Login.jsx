@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Providers/AuthContextProvider';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
-    const { singIn, setUser } = useContext(AuthContext)
+    const { handleSignIn, setUser } = useContext(AuthContext)
 
 
     useEffect(() => {
@@ -22,7 +24,7 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        singIn(email, password)
+        handleSignIn(email, password)
             .then(result => {
                 const user = result?.user;
                 setUser(user)
@@ -32,7 +34,9 @@ const Login = () => {
                     title: "Login Successful",
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
+                e.target.reset();
+                navigate(location?.state ? location?.state : "/")
             })
             .catch(err => {
                 Swal.fire({
@@ -41,7 +45,7 @@ const Login = () => {
                     title: `${err.message}`,
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
             })
 
     };
@@ -58,7 +62,10 @@ const Login = () => {
 
 
     return (
-        <div className="hero bg-base-200 min-h-screen">
+        <div className="hero bg-base-200 min-h-screen relative">
+
+            <button className='btn btn-xs absolute top-0 left-0'> <Link to='/'>Home</Link></button>
+
             <div className="hero-content flex-col lg:flex-row">
                 <div className="text-center md:w-1/2 lg:text-left">
                     <h1 className="text-5xl font-bold">Login now!</h1>

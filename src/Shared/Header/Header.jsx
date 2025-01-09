@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Providers/AuthContextProvider';
+import Swal from 'sweetalert2';
 
 const Header = () => {
+    const { handleSignOut, user } = useContext(AuthContext)
+    const handleLogOut = () => {
+        handleSignOut()
+        .then(() => {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Log Out Successful",
+                showConfirmButton: false,
+                timer: 1500
+              });
+        })
+        .catch(err => {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${err.message}`,
+                showConfirmButton: false,
+                timer: 1500
+              }); 
+        })
+
+    }
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/menu'>Our Menu</NavLink></li>
         <li><NavLink to='/order/Salad'>Order</NavLink></li>
+        <li><NavLink to='/secret'>Secret</NavLink></li>
     </>
     return (
         <div>
@@ -40,7 +66,13 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to='/login' className="btn">Login</Link>
+                    {
+                        user && user?.email ?
+                            <button className='btn' onClick={handleLogOut}>Log Out</button>
+                            :
+                            <Link to='/login' className="btn">Login</Link>
+                    }
+
                 </div>
             </div>
         </div>

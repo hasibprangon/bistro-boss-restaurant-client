@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     };
 
-    const signIn = (email, password) => {
+    const handleSignIn = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
@@ -46,7 +46,7 @@ const AuthContextProvider = ({ children }) => {
         loading,
         setLoading,
         createUser,
-        signIn,
+        handleSignIn,
         handleSignOut,
         updateUserProfile
 

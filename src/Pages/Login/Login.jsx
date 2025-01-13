@@ -10,8 +10,7 @@ const Login = () => {
     const navigate = useNavigate();
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
-    const { handleSignIn, setUser } = useContext(AuthContext)
-    console.log("state in the login page",location?.state);
+    const { handleSignIn, setUser } = useContext(AuthContext);
 
 
     useEffect(() => {

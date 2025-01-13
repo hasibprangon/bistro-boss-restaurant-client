@@ -1,7 +1,57 @@
 import React from 'react';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const FoodCard = ({ item }) => {
-    const { name, image, price, recipe } = item;
+    const { name, image, price, recipe, _id } = item;
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const AxiosSecure = useAxiosSecure();
+
+    const handleAddToCart = food => {
+        if (user && user?.email) {
+            const cartItem = {
+                menuId: _id,
+                email: user?.email,
+                name: food?.name,
+                image: food?.image,
+                price: food?.price
+            }
+
+            AxiosSecure.post('/carts', cartItem)
+            .then(res => {
+                if(res?.data?.insertedId) {
+                    Swal.fire({
+                        position: "top",
+                        icon: "success",
+                        title: `${name} added to the cart`,
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                }
+            })
+            
+        }
+        else {
+            Swal.fire({
+                title: "You are not Logged in",
+                text: "Please login to add to cart",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Please, Login"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', {state: location?.pathname});
+                }
+            });
+        }
+    }
     return (
         <div className="card bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 shadow-xl hover:scale-105 transition-transform duration-300 w-96 rounded-lg overflow-hidden">
             <figure className="relative">
@@ -27,7 +77,9 @@ const FoodCard = ({ item }) => {
                     {recipe}
                 </p>
                 <div className="card-actions">
-                    <button className="btn bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white px-6 py-2 rounded-full font-medium shadow-md hover:shadow-lg hover:brightness-110 transition-all duration-300">
+                    <button
+                        onClick={() => handleAddToCart(item)}
+                        className="btn bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white px-6 py-2 rounded-full font-medium shadow-md hover:shadow-lg hover:brightness-110 transition-all duration-300">
                         Add To Cart
                     </button>
                 </div>

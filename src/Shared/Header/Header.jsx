@@ -2,29 +2,31 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthContextProvider';
 import Swal from 'sweetalert2';
+import { FaOpencart } from "react-icons/fa";
+
 
 const Header = () => {
     const { handleSignOut, user } = useContext(AuthContext)
     const handleLogOut = () => {
         handleSignOut()
-        .then(() => {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Log Out Successful",
-                showConfirmButton: false,
-                timer: 1500
-              });
-        })
-        .catch(err => {
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: `${err.message}`,
-                showConfirmButton: false,
-                timer: 1500
-              }); 
-        })
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Log Out Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${err.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
 
     }
     const links = <>
@@ -32,6 +34,12 @@ const Header = () => {
         <li><NavLink to='/menu'>Our Menu</NavLink></li>
         <li><NavLink to='/order/Salad'>Order</NavLink></li>
         <li><NavLink to='/secret'>Secret</NavLink></li>
+        <li><NavLink to='/secret'>
+            <button className="btn btn-outline text-black">
+            <FaOpencart className='mr-4 text-2xl' />
+                <div className="badge badge-primary">+0</div>
+            </button>
+        </NavLink></li>
     </>
     return (
         <div>

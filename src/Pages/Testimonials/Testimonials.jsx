@@ -7,14 +7,15 @@ import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css'
-import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 
 const Testimonials = () => {
     const [reviews, setReviews] = useState([]);
+    const AxiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        axios(`http://localhost:5000/reviews`)
+        AxiosSecure.get(`http://localhost:5000/reviews`)
             .then(res => {
                 setReviews(res.data);
             })

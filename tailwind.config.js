@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        prata: ['Prata', 'serif']
+        prata: ['Prata', 'serif'],
+        dancing:  ['"Dancing Script"', 'cursive']
       }
     },
   },

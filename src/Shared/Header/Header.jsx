@@ -36,7 +36,7 @@ const Header = () => {
         <li><NavLink to='/menu'>Our Menu</NavLink></li>
         <li><NavLink to='/order/Salad'>Order</NavLink></li>
         <li><NavLink to='/secret'>Secret</NavLink></li>
-        <li><NavLink to='/dashboard/cart' className="btn btn-outline text-black">
+        <li><NavLink to='/dashboard/cart' className="btn btn-ghost">
             <FaOpencart className='mr-4 text-2xl' />
             <span className="badge badge-primary">+{cart.length}</span>
         </NavLink></li>

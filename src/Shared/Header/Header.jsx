@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthContextProvider';
 import Swal from 'sweetalert2';
 import { FaOpencart } from "react-icons/fa";
+import useCart from '../../hooks/useCart';
 
 
 const Header = () => {
-    const { handleSignOut, user } = useContext(AuthContext)
+    const { handleSignOut, user } = useContext(AuthContext);
+    const [cart] = useCart();
     const handleLogOut = () => {
         handleSignOut()
             .then(() => {
@@ -37,7 +39,7 @@ const Header = () => {
         <li><NavLink to='/secret'>
             <button className="btn btn-outline text-black">
             <FaOpencart className='mr-4 text-2xl' />
-                <div className="badge badge-primary">+0</div>
+                <div className="badge badge-primary">+{cart.length}</div>
             </button>
         </NavLink></li>
     </>

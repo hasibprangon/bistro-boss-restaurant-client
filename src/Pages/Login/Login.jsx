@@ -3,6 +3,8 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from '../../Providers/AuthContextProvider';
 import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+
 
 
 const Login = () => {
@@ -10,12 +12,37 @@ const Login = () => {
     const navigate = useNavigate();
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
-    const { handleSignIn, setUser } = useContext(AuthContext);
+    const { handleSignIn, setUser, handleGoogleSignup } = useContext(AuthContext);
 
 
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
+
+    const handleGoogleLogin = () => {
+        handleGoogleSignup()
+            .then(result => {
+                const user = result?.user;
+                setUser(user);
+                Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Sign Up Successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate(location?.state ? location?.state : "/");
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: "top",
+                    icon: "error",
+                    title: `${err?.message}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+    }
 
 
     const handleLogin = e => {
@@ -36,7 +63,7 @@ const Login = () => {
                     timer: 1500
                 });
                 e.target.reset();
-                navigate(location?.state ? location?.state : "/")
+                navigate(location?.state ? location?.state : "/");
             })
             .catch(err => {
                 Swal.fire({
@@ -64,7 +91,7 @@ const Login = () => {
     return (
         <div className="hero bg-base-200 min-h-screen relative">
 
-            <button className='btn btn-xs absolute top-0 left-0'> <Link to='/'>Home</Link></button>
+            <Link  className='btn btn-md absolute top-0 left-0' to='/'>Home</Link>  
 
             <div className="hero-content flex-col lg:flex-row">
                 <div className="text-center md:w-1/2 lg:text-left">
@@ -102,6 +129,7 @@ const Login = () => {
                             <button type='button' onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'>Validate</button>
                         </div>
                         <div className="form-control mt-6">
+                            <button type='button' onClick={handleGoogleLogin} className='flex justify-center items-center gap-3 px-3 py-2 bg-gray-400 rounded-lg mb-4 text-white font-semibold'><FcGoogle className='text-lg' />Login With Google</button>
                             <button disabled={disabled} className="btn btn-primary">Login</button>
                         </div>
                     </form>

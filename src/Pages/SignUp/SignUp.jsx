@@ -32,9 +32,10 @@ const SignUp = () => {
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            navigate('/');
+                            
                         }
                     })
+                    navigate('/');
             })
             .catch(err => {
                 Swal.fire({

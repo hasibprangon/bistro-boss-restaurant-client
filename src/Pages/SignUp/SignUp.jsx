@@ -19,7 +19,8 @@ const SignUp = () => {
                 const userInfo = {
                     email: result?.user?.email,
                     name: result?.user?.displayName,
-                    photoURL: result?.user?.photoURL
+                    photoURL: result?.user?.photoURL,
+                    role: ""
                 }
 
                 axiosPublic.post('/users', userInfo)
@@ -67,7 +68,7 @@ const SignUp = () => {
             return;
         };
         const userInfo = {
-            name, email, photoUrl
+            name, email, photoUrl, role: ""
         }
         createUser(email, password)
             .then(result => {

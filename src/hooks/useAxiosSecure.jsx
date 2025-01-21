@@ -23,7 +23,7 @@ const useAxiosSecure = () => {
     AxiosSecure.interceptors.response.use(function(response) {
       return response
     }, async(error) => {
-      const status = error.response.status;
+      const status = error.response?.status;
       console.log('status error in interceptors: ', status);
       if(status === 401 || status === 403) {
         await handleSignOut();

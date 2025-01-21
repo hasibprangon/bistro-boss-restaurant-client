@@ -7,14 +7,15 @@ import { FaStarHalfStroke } from "react-icons/fa6";
 import { LuNotebookPen } from "react-icons/lu";
 import { TiThMenuOutline } from 'react-icons/ti';
 import useCart from '../hooks/useCart';
+import useAdmin from '../hooks/useAdmin';
 
 
 const Dashboard = () => {
     const [cart] = useCart();
 
     // todo: get admin value from the database
-    const isAdmin = true;
-
+    const [isAdmin] = useAdmin();
+ 
     return (
         <div className="flex min-h-screen font-dancing">
             {/* Aside Section */}
